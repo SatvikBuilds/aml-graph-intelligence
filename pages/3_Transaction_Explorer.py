@@ -134,15 +134,15 @@ if isinstance(selected_dates, (tuple, list)) and len(selected_dates) == 2:
 # Summary metrics of filtered view
 s1, s2, s3, s4 = st.columns(4)
 with s1:
-    render_kpi("Matching Transactions", f"{len(filtered_df):,}", f"Out of {len(df):,} total", "#38bdf8")
+    render_kpi("Matching Transactions", f"{len(filtered_df):,}", f"Out of {len(df):,} total", "#00f2fe", icon="🔍")
 with s2:
-    render_kpi("Filtered Volume", format_currency(filtered_df["amount"].sum()), "Filtered aggregate", "#10b981")
+    render_kpi("Filtered Volume", format_currency(filtered_df["amount"].sum()), "Filtered aggregate", "#00f5a0", icon="💵")
 with s3:
     susp_match = int((filtered_df["detection_status"] == "Suspicious").sum())
-    render_kpi("Suspicious Matches", f"{susp_match:,}", "Flagged high threat", "#ef4444")
+    render_kpi("Suspicious Matches", f"{susp_match:,}", "Flagged high threat", "#ff3366", icon="🚨")
 with s4:
     avg_amt = filtered_df["amount"].mean() if len(filtered_df) > 0 else 0
-    render_kpi("Avg Filtered Amount", format_currency(avg_amt), "Mean transaction size", "#f59e0b")
+    render_kpi("Avg Filtered Amount", format_currency(avg_amt), "Mean transaction size", "#fbbf24", icon="📊")
 
 st.markdown("<br/>", unsafe_allow_html=True)
 

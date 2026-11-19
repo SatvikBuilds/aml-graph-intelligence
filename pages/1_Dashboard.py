@@ -40,13 +40,35 @@ render_officer_sidebar()
 
 # Header
 st.markdown("""
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <div>
-        <span class="threat-badge threat-normal">FORENSIC MONITORING CONSOLE</span>
-        <h1 style="margin: 6px 0 2px 0;">AML Executive Dashboard</h1>
-        <p style="color: #94a3b8; font-size: 0.95rem; margin: 0;">
-            Comprehensive macro-level transaction analytics, risk distributions, and graph topology signals.
-        </p>
+<div style="
+    padding: 28px 0 20px;
+    border-bottom: 1px solid rgba(167,139,250,0.12);
+    margin-bottom: 28px;
+">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div>
+            <span style="
+                display:inline-flex; align-items:center; gap:6px;
+                background:rgba(124,58,237,0.12); border:1px solid rgba(167,139,250,0.3);
+                border-radius:999px; padding:4px 12px;
+                font-size:0.70rem; font-weight:700; color:#c4b5fd;
+                letter-spacing:0.08em; text-transform:uppercase;
+                font-family:'DM Mono',monospace;
+            ">📊 EXECUTIVE OVERVIEW</span>
+            <h1 style="margin:10px 0 4px; font-family:'Sora',sans-serif; letter-spacing:-0.04em;">
+                AML Command Center
+            </h1>
+            <p style="color:#9d8fc4; font-size:0.93rem; margin:0;">
+                Macro-level transaction analytics, risk distributions and graph topology signals.
+            </p>
+        </div>
+        <div style="
+            background:rgba(26,16,53,0.7); border:1px solid rgba(167,139,250,0.15);
+            border-radius:14px; padding:12px 18px; text-align:right;
+        ">
+            <div style="font-size:0.68rem; color:#6d6a8a; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:4px;">DATA SOURCE</div>
+            <div style="font-size:0.85rem; color:#c4b5fd; font-weight:700;">Synthetic Demo Dataset</div>
+        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -93,17 +115,17 @@ suspicious_networks_count = len(cycles) + len(smurfs) + len(clusters)
 kpi1, kpi2, kpi3, kpi4, kpi5, kpi6 = st.columns(6)
 
 with kpi1:
-    render_kpi("Total Transactions", f"{total_txns:,}", "Analyzed in graph", "#38bdf8")
+    render_kpi("Total Transactions", f"{total_txns:,}", "Analyzed in graph", "#a78bfa", icon="💳")
 with kpi2:
-    render_kpi("Total Accounts", f"{total_accounts:,}", "Entities in network", "#06b6d4")
+    render_kpi("Total Accounts", f"{total_accounts:,}", "Entities in network", "#818cf8", icon="🏦")
 with kpi3:
-    render_kpi("Suspicious Txns", f"{suspicious_txns:,}", f"{(suspicious_txns/total_txns*100):.1f}% of total" if total_txns > 0 else "", "#ef4444")
+    render_kpi("Suspicious Txns", f"{suspicious_txns:,}", f"{(suspicious_txns/total_txns*100):.1f}% of total" if total_txns > 0 else "", "#fb7185", icon="⚠️")
 with kpi4:
-    render_kpi("High-Risk Accounts", f"{high_risk_accounts}", "Threat score &ge; 0.70", "#f43f5e")
+    render_kpi("High-Risk Accounts", f"{high_risk_accounts}", "Threat score ≥ 0.70", "#f43f5e", icon="🚨")
 with kpi5:
-    render_kpi("Suspicious Networks", f"{suspicious_networks_count}", f"{len(cycles)} cycles &bull; {len(smurfs)} smurfs", "#f59e0b")
+    render_kpi("Suspicious Networks", f"{suspicious_networks_count}", f"{len(cycles)} cycles · {len(smurfs)} smurfs", "#fbbf24", icon="🕸️")
 with kpi6:
-    render_kpi("Total Volume", format_currency(total_volume), "Total currency tracked", "#10b981")
+    render_kpi("Total Volume", format_currency(total_volume), "Total currency tracked", "#34d399", icon="💰")
 
 st.markdown("<br/>", unsafe_allow_html=True)
 
@@ -138,7 +160,12 @@ st.markdown("<br/>", unsafe_allow_html=True)
 sec_col1, sec_col2 = st.columns([1, 1])
 
 with sec_col1:
-    st.markdown("### 🚨 Top 5 High-Risk Accounts")
+    st.markdown("""
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+        <span style="font-size:1.1rem;">🚨</span>
+        <h3 style="margin:0;font-size:1.0rem;color:#ede9fe;">Top 5 High-Risk Accounts</h3>
+    </div>
+    """, unsafe_allow_html=True)
     if preds_df is not None:
         top_5 = preds_df.sort_values(by="risk_score", ascending=False).head(5)
         # Display horizontal bar chart
@@ -194,24 +221,32 @@ with sec_col2:
 
 st.markdown("<br/>", unsafe_allow_html=True)
 
-# Graph Topology Fast Summary
-st.markdown("### 🕸️ Detected Suspicious Graph Topologies")
+st.markdown("""
+<div style="
+    display:flex; align-items:center; gap:10px;
+    margin:28px 0 16px; padding-bottom:12px;
+    border-bottom:1px solid rgba(167,139,250,0.12);
+">
+    <span style="width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#ec4899);box-shadow:0 0 8px rgba(124,58,237,0.6);flex-shrink:0;display:inline-block;"></span>
+    <h3 style="margin:0; font-size:1.05rem; color:#ede9fe;">Detected Suspicious Graph Topologies</h3>
+</div>
+""", unsafe_allow_html=True)
 topo_col1, topo_col2, topo_col3 = st.columns(3)
 
 with topo_col1:
     st.markdown(f"""
     <div class="kpi-card">
-        <h4 style="margin: 0 0 6px 0; color: #38bdf8;">🔄 Circular Round-Tripping</h4>
-        <p style="font-size: 0.85rem; color: #94a3b8; margin: 0 0 10px 0;">Directed cycles where capital loops back to origin accounts.</p>
-        <span class="threat-badge threat-high">{len(cycles)} Closed Loops Detected</span>
+        <h4 style="margin:0 0 6px 0; color:#a78bfa; font-size:0.95rem;">🔄 Circular Round-Tripping</h4>
+        <p style="font-size:0.83rem; color:#6d6a8a; margin:0 0 12px 0;">Directed cycles where capital loops back to origin accounts.</p>
+        <span class="threat-badge threat-high">{len(cycles)} Closed Loops</span>
     </div>
     """, unsafe_allow_html=True)
 
 with topo_col2:
     st.markdown(f"""
     <div class="kpi-card">
-        <h4 style="margin: 0 0 6px 0; color: #38bdf8;">🌪️ Smurfing / Structuring</h4>
-        <p style="font-size: 0.85rem; color: #94a3b8; margin: 0 0 10px 0;">Fan-in aggregators receiving multiple deposits below $10,000.</p>
+        <h4 style="margin:0 0 6px 0; color:#a78bfa; font-size:0.95rem;">🌪️ Smurfing / Structuring</h4>
+        <p style="font-size:0.83rem; color:#6d6a8a; margin:0 0 12px 0;">Fan-in aggregators receiving multiple deposits below threshold.</p>
         <span class="threat-badge threat-high">{len(smurfs)} Aggregator Hubs</span>
     </div>
     """, unsafe_allow_html=True)
@@ -219,8 +254,8 @@ with topo_col2:
 with topo_col3:
     st.markdown(f"""
     <div class="kpi-card">
-        <h4 style="margin: 0 0 6px 0; color: #38bdf8;">👥 Suspicious Subgraph Clusters</h4>
-        <p style="font-size: 0.85rem; color: #94a3b8; margin: 0 0 10px 0;">Tightly coupled account components with high fraud density.</p>
+        <h4 style="margin:0 0 6px 0; color:#a78bfa; font-size:0.95rem;">👥 Suspicious Subgraph Clusters</h4>
+        <p style="font-size:0.83rem; color:#6d6a8a; margin:0 0 12px 0;">Tightly coupled account components with high fraud density.</p>
         <span class="threat-badge threat-medium">{len(clusters)} Active Clusters</span>
     </div>
     """, unsafe_allow_html=True)

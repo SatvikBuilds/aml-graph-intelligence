@@ -200,27 +200,27 @@ else:
 # ==========================================
 gm1, gm2, gm3, gm4, gm5 = st.columns(5)
 with gm1:
-    render_kpi("Visible Nodes", f"{len(sub_G.nodes):,}", "Active accounts", "#38bdf8")
+    render_kpi("Visible Nodes", f"{len(sub_G.nodes):,}", "Active accounts", "#00f2fe", icon="🟣")
 with gm2:
-    render_kpi("Visible Edges", f"{len(sub_G.edges):,}", "Financial transfers", "#06b6d4")
+    render_kpi("Visible Edges", f"{len(sub_G.edges):,}", "Financial transfers", "#4facfe", icon="🔗")
 with gm3:
     vis_vol = sum(d.get("amount", 0.0) for _, _, d in sub_G.edges(data=True))
-    render_kpi("Subnetwork Flow", format_currency(vis_vol), "Aggregated volume", "#10b981")
+    render_kpi("Subnetwork Flow", format_currency(vis_vol), "Aggregated volume", "#00f5a0", icon="💰")
 with gm4:
     high_vis = sum(1 for n, d in sub_G.nodes(data=True) if d.get("risk_level") == "High Risk")
-    render_kpi("High Threat Nodes", f"{high_vis}", "In current view", "#ef4444")
+    render_kpi("High Threat Nodes", f"{high_vis}", "In current view", "#ff3366", icon="🚨")
 with gm5:
-    render_kpi("Hop Distance", f"{hop_depth}-Hop" if target_acc else "Global", "Exploration radius", "#f59e0b")
+    render_kpi("Hop Distance", f"{hop_depth}-Hop" if target_acc else "Global", "Exploration radius", "#fbbf24", icon="🎯")
 
 # Legend Row
 st.markdown("""
-<div style="display: flex; gap: 20px; align-items: center; background: #0f172a; padding: 10px 18px; border-radius: 8px; border: 1px solid #1e293b; margin: 12px 0 16px 0; font-size: 0.85rem;">
-    <span style="font-weight: 600; color: #94a3b8;">NODE RISK LEGEND:</span>
-    <span style="display: flex; align-items: center; gap: 6px;"><span style="height: 12px; width: 12px; border-radius: 50%; background-color: #ef4444; display: inline-block;"></span> <b style="color: #f87171;">Red: High Risk (&ge; 0.70)</b></span>
-    <span style="display: flex; align-items: center; gap: 6px;"><span style="height: 12px; width: 12px; border-radius: 50%; background-color: #f59e0b; display: inline-block;"></span> <b style="color: #fbbf24;">Yellow: Medium Risk (0.40 - 0.69)</b></span>
-    <span style="display: flex; align-items: center; gap: 6px;"><span style="height: 12px; width: 12px; border-radius: 50%; background-color: #10b981; display: inline-block;"></span> <b style="color: #34d399;">Green: Low Risk (0.05 - 0.39)</b></span>
-    <span style="display: flex; align-items: center; gap: 6px;"><span style="height: 12px; width: 12px; border-radius: 50%; background-color: #38bdf8; display: inline-block;"></span> <b style="color: #38bdf8;">Blue: Normal (&lt; 0.05)</b></span>
-    <span style="display: flex; align-items: center; gap: 6px; margin-left: auto;"><span style="height: 12px; width: 12px; border-radius: 50%; background-color: #f43f5e; display: inline-block;"></span> <b style="color: #f43f5e;">Crimson Glow: Selected Ego Center / Suspicious Path</b></span>
+<div style="display: flex; gap: 20px; align-items: center; background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(11, 18, 33, 0.9) 100%); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 12px 0 18px 0; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    <span style="font-weight: 700; color: #94a3b8; letter-spacing: 0.05em;">RISK COLOR SPECTRUM:</span>
+    <span style="display: flex; align-items: center; gap: 6px;"><span style="height: 10px; width: 10px; border-radius: 50%; background-color: #ff3366; box-shadow: 0 0 8px #ff3366; display: inline-block;"></span> <b style="color: #ff6b81;">High Risk (&ge; 0.70)</b></span>
+    <span style="display: flex; align-items: center; gap: 6px;"><span style="height: 10px; width: 10px; border-radius: 50%; background-color: #fbbf24; box-shadow: 0 0 8px #fbbf24; display: inline-block;"></span> <b style="color: #fbbf24;">Medium Risk (0.40 - 0.69)</b></span>
+    <span style="display: flex; align-items: center; gap: 6px;"><span style="height: 10px; width: 10px; border-radius: 50%; background-color: #00f5a0; box-shadow: 0 0 8px #00f5a0; display: inline-block;"></span> <b style="color: #34d399;">Low Risk (0.05 - 0.39)</b></span>
+    <span style="display: flex; align-items: center; gap: 6px;"><span style="height: 10px; width: 10px; border-radius: 50%; background-color: #00f2fe; box-shadow: 0 0 8px #00f2fe; display: inline-block;"></span> <b style="color: #00f2fe;">Normal (&lt; 0.05)</b></span>
+    <span style="display: flex; align-items: center; gap: 6px; margin-left: auto;"><span style="height: 10px; width: 10px; border-radius: 50%; background-color: #ff3366; box-shadow: 0 0 12px #ff3366; display: inline-block;"></span> <b style="color: #ff3366;">Active Ego Center / Target Path</b></span>
 </div>
 """, unsafe_allow_html=True)
 
