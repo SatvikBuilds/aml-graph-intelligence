@@ -1,1 +1,1 @@
-# Utils package
+# Database package for MongoDB integration
