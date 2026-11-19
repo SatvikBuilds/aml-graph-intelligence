@@ -79,15 +79,15 @@ with st.sidebar:
 
 # Main Screen Hero
 st.markdown("""
-<div style="background: linear-gradient(135deg, rgba(14, 23, 47, 0.95) 0%, rgba(8, 14, 29, 0.98) 100%); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: 20px; padding: 32px; margin-bottom: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
+<div style="background: linear-gradient(135deg, #0f172a 0%, #172554 100%); border: 1px solid #1e293b; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
         <div>
-            <span class="threat-badge threat-normal" style="margin-bottom: 14px;">⚡ MULTI-HOP AML INTELLIGENCE PLATFORM</span>
-            <h1 style="font-size: 2.3rem; margin: 10px 0 12px 0; color: #ffffff; font-weight: 800; letter-spacing: -0.03em;">
+            <span class="threat-badge threat-normal" style="margin-bottom: 12px;">MULTI-HOP AML INTELLIGENCE PLATFORM</span>
+            <h1 style="font-size: 2.2rem; margin: 8px 0 12px 0; color: #f8fafc; font-weight: 700;">
                 Dynamic Graph Intelligence for Multi-Hop Anti-Money Laundering
             </h1>
-            <p style="color: #94a3b8; font-size: 1.05rem; max-width: 880px; line-height: 1.6; margin: 0; font-weight: 400;">
-                A next-generation financial forensic intelligence platform combining <b>NetworkX graph topology</b>, 
+            <p style="color: #94a3b8; font-size: 1.05rem; max-width: 860px; line-height: 1.6; margin: 0;">
+                A next-generation financial forensic engine combining <b>NetworkX graph topology</b>, 
                 <b>Graph Convolutional Networks (GCN)</b>, and <b>Graph Attention Networks (GAT)</b> to dismantle 
                 sophisticated money laundering topologies, including structuring smurfs, multi-tier layering chains, and circular round-tripping.
             </p>
@@ -114,13 +114,13 @@ if df is not None:
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        render_kpi("Monitored Transactions", f"{total_txns:,}", "Loaded in current session", "#00f2fe", icon="💳")
+        render_kpi("Total Monitored Transactions", f"{total_txns:,}", "Loaded in current session", "#38bdf8")
     with col2:
-        render_kpi("Account Entities", f"{total_accounts:,}", "Active graph node vertices", "#4facfe", icon="🏦")
+        render_kpi("Monitored Account Entities", f"{total_accounts:,}", "Active graph node vertices", "#06b6d4")
     with col3:
-        render_kpi("Total Transaction Flow", format_currency(total_vol), "Cumulative currency tracked", "#00f5a0", icon="💰")
+        render_kpi("Total Transaction Volume", format_currency(total_vol), "Cumulative currency transferred", "#10b981")
     with col4:
-        render_kpi("High-Threat Entities", f"{high_risk_accs}", f"{med_risk_accs} elevated risk accounts", "#ff3366", icon="🚨")
+        render_kpi("High-Threat Accounts", f"{high_risk_accs}", f"{med_risk_accs} medium-risk accounts", "#ef4444")
 
 st.markdown("<br/>", unsafe_allow_html=True)
 
